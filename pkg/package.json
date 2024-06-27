@@ -1,0 +1,14 @@
+{
+  "name": "stwo-wasm-demo",
+  "version": "0.1.0",
+  "files": [
+    "stwo_wasm_demo_bg.wasm",
+    "stwo_wasm_demo.js",
+    "stwo_wasm_demo.d.ts"
+  ],
+  "module": "stwo_wasm_demo.js",
+  "types": "stwo_wasm_demo.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
