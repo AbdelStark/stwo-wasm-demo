@@ -1,0 +1,2 @@
+# Ignore WASM generated files
+src/pkg/**/*
