@@ -27,11 +27,13 @@ jobs:
       - name: Build
         run: wasm-pack build --target web
 
-      - name: Copy WASM files
+      - name: Prepare deployment
         run: |
           mkdir -p dist
           cp index.html dist/
           cp -R pkg dist/
+          echo "Content of dist directory:"
+          ls -R dist
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

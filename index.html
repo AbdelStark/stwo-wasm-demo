@@ -16,7 +16,8 @@
         margin: 10px 0;
         padding: 5px 10px;
       }
-      #result {
+      #result,
+      #debug {
         margin-top: 20px;
         padding: 10px;
         border: 1px solid #ccc;
@@ -59,41 +60,57 @@
     </form>
 
     <div id="result"></div>
+    <div id="debug"></div>
 
     <script type="module">
       import init, { run_fibonacci_example } from "./pkg/stwo_wasm_demo.js";
 
       async function run() {
-        await init();
+        try {
+          await init();
+          document.getElementById("debug").textContent =
+            "WASM module initialized successfully";
 
-        function displayResult(result) {
-          const resultDiv = document.getElementById("result");
-          resultDiv.textContent = `Success: ${result.success}, Message: ${result.message}`;
-          resultDiv.style.color = result.success ? "green" : "red";
+          function displayResult(result) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = `Success: ${result.success}, Message: ${result.message}`;
+            resultDiv.style.color = result.success ? "green" : "red";
+          }
+
+          document
+            .getElementById("runSuccess")
+            .addEventListener("click", () => {
+              const result = run_fibonacci_example(5, 443693538);
+              displayResult(result);
+            });
+
+          document
+            .getElementById("runFailure")
+            .addEventListener("click", () => {
+              const result = run_fibonacci_example(5, 123456789); // Invalid claim
+              displayResult(result);
+            });
+
+          document
+            .getElementById("customForm")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              const logSize = parseInt(
+                document.getElementById("logSize").value,
+                10
+              );
+              const claim = parseInt(
+                document.getElementById("claim").value,
+                10
+              );
+              const result = run_fibonacci_example(logSize, claim);
+              displayResult(result);
+            });
+        } catch (e) {
+          document.getElementById(
+            "debug"
+          ).textContent = `Error initializing WASM module: ${e}`;
         }
-
-        document.getElementById("runSuccess").addEventListener("click", () => {
-          const result = run_fibonacci_example(5, 443693538);
-          displayResult(result);
-        });
-
-        document.getElementById("runFailure").addEventListener("click", () => {
-          const result = run_fibonacci_example(5, 123456789); // Invalid claim
-          displayResult(result);
-        });
-
-        document
-          .getElementById("customForm")
-          .addEventListener("submit", (e) => {
-            e.preventDefault();
-            const logSize = parseInt(
-              document.getElementById("logSize").value,
-              10
-            );
-            const claim = parseInt(document.getElementById("claim").value, 10);
-            const result = run_fibonacci_example(logSize, claim);
-            displayResult(result);
-          });
       }
 
       run();
