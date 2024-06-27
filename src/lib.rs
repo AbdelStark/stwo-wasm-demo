@@ -1,11 +1,3 @@
-#![cfg_attr(feature = "nightly_features", feature(new_uninit))]
-#![cfg_attr(feature = "nightly_features", feature(slice_group_by))]
-#![cfg_attr(feature = "nightly_features", feature(get_many_mut))]
-#![cfg_attr(feature = "nightly_features", feature(int_roundings))]
-#![cfg_attr(feature = "nightly_features", feature(slice_flatten))]
-#![cfg_attr(feature = "nightly_features", feature(assert_matches))]
-#![cfg_attr(feature = "nightly_features", feature(portable_simd))]
-
 use stwo_prover::core::fields::m31::BaseField;
 use stwo_prover::examples::fibonacci::Fibonacci;
 use wasm_bindgen::prelude::*;
