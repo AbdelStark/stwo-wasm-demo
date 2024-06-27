@@ -19,8 +19,10 @@ jobs:
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly-2024-02-01 # Use a specific nightly version
           target: wasm32-unknown-unknown
+          override: true
+          components: rustfmt, clippy
 
       - name: Install wasm-pack
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
