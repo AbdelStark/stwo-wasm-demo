@@ -58,6 +58,10 @@ python -m http.server
 - **Custom Input**: Experiment with your own log sizes and claims.
 - **Real-time Feedback**: Instant results displayed in a user-friendly format.
 
+## TODO
+
+- [ ] Try to use wasm simd with the generic simd backend (`RUST_FLAGS="-C target-feature=+simd128"`)
+
 ## 🤝 Contributing
 
 We love contributions! If you have ideas for improvements or find any issues, please open an issue or submit a pull request.
