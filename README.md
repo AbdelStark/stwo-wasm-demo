@@ -1,4 +1,4 @@
-# 🌟 STWO WASM Demo: Fibonacci Proof in Your Browser! 🌟
+# 🌟 STWO WASM Demo: Circle STARK proof in your browser!
 
 <div align="center">
 
