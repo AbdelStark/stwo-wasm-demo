@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STWO Fibonacci WASM Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      button,
+      input[type="submit"] {
+        margin: 10px 0;
+        padding: 5px 10px;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>STWO Fibonacci WASM Demo</h1>
+
+    <h2>Predefined Cases</h2>
+    <button id="runSuccess">Run Success Case</button>
+    <button id="runFailure">Run Failure Case</button>
+
+    <h2>Custom Input</h2>
+    <form id="customForm">
+      <label for="logSize">Log Size:</label>
+      <input
+        type="number"
+        id="logSize"
+        name="logSize"
+        required
+        min="1"
+        max="10"
+        value="5"
+      /><br />
+
+      <label for="claim">Claim:</label>
+      <input
+        type="number"
+        id="claim"
+        name="claim"
+        required
+        min="0"
+        max="2147483647"
+        value="443693538"
+      /><br />
+
+      <input type="submit" value="Run Custom Case" />
+    </form>
+
+    <div id="result"></div>
+
+    <script type="module">
+      import init, { run_fibonacci_example } from "./pkg/stwo_wasm_demo.js";
+
+      async function run() {
+        await init();
+
+        function displayResult(result) {
+          const resultDiv = document.getElementById("result");
+          resultDiv.textContent = `Success: ${result.success}, Message: ${result.message}`;
+          resultDiv.style.color = result.success ? "green" : "red";
+        }
+
+        document.getElementById("runSuccess").addEventListener("click", () => {
+          const result = run_fibonacci_example(5, 443693538);
+          displayResult(result);
+        });
+
+        document.getElementById("runFailure").addEventListener("click", () => {
+          const result = run_fibonacci_example(5, 123456789); // Invalid claim
+          displayResult(result);
+        });
+
+        document
+          .getElementById("customForm")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            const logSize = parseInt(
+              document.getElementById("logSize").value,
+              10
+            );
+            const claim = parseInt(document.getElementById("claim").value, 10);
+            const result = run_fibonacci_example(logSize, claim);
+            displayResult(result);
+          });
+      }
+
+      run();
+    </script>
+  </body>
+</html>
